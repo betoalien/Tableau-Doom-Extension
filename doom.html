@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doom in Tableau</title>
+    <script src="https://js-dos.com/6.22/current/js-dos.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: black;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            padding: 0;
+        }
+        .dosbox-container {
+            width: 100vw;
+            height: 100vh;
+            margin: auto;
+            padding: 0;
+        }
+        #controls-heading, #controls-list {
+            padding-left: 50px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div id="doom-container">
+        <canvas id="jsdos"></canvas>
+    </div>
+    <script type="text/javascript">
+        var runDoom = function () {
+            console.log('Doom Activated!');
+            Dos(document.getElementById("jsdos"), {
+                wdosboxUrl: "https://js-dos.com/6.22/current/wdosbox.js",
+            }).ready(function (fs, main) {
+                fs.extract("https://js-dos.com/cdn/upload/DOOM-@evilution.zip").then(function () {
+                    main(["-c", "cd DOOM", "-c", "DOOM.EXE"]).then(function (ci) {
+                        window.ci = ci;
+                        setTimeout(() => ci.fullscreen(), 500); // Auto fullscreen after short delay
+                    });
+                });
+            });
+        };
+        window.onload = runDoom; // Start Doom on page load
+    </script>
+</body>
+</html>
